@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction to Algorithms | Stacks & Queues</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="app">
+<!-- Paste below this line -->
+
+<h2 id="stacks-queues">Stacks &amp; Queues</h2>
+<p><img src="images/stacks_final.png" alt="Stacks"></p>
+<p>Stacks and Queues are two abstract data types. We can use various structures to represent them but what is most important, is their behavior that defines them and how we can use each respectively.</p>
+<p>There are no code examples in this section but rather, just pseudocode. </p>
+<h3 id="stacks">Stacks</h3>
+<p>A Stack is a &quot;First In Last Out&quot; (FILO) structure.</p>
+<p>Examples of this are collecting and cleaning plates after a meal. When we collect a plate, we put it on the top of the previous plate and when we clean them, we take the one off the top first. Another, perhaps better, example is a can of Pringles or tennis ball sleeve. The first chip in, is the last one out.</p>
+<h4 id="functions">Functions</h4>
+<p>Stacks have three primary functions.</p>
+<ul>
+<li><code>.push(item)</code>, which adds the item on to the Stack</li>
+<li><code>.pop()</code>, which removes the top item off the Stack</li>
+<li><code>.peek()</code>, which examines the top item off of the Stack</li>
+</ul>
+<p>You&#39;ll notice that these functions already exist within JavaScript&#39;s Array. Modern programming languages have enabled this behavior, merging it in to the Dynamic Arrays linked in the previous chapter.</p>
+<p>Another exmaple of a Stack is the &quot;Undo&quot; function on your computer. When you type something in, its pushed on to your computer&#39;s memory Stack. When (usually) Ctrl/Cmd + Z is invoked, it pops off the last item in the Stack and reverts us back to where we were.</p>
+<h3 id="queues">Queues</h3>
+<p><img src="images/queues_final.png" alt="Queues"></p>
+<p>Queues differ slightly in that they are a &quot;First In First Out&quot; (FIFO) data structure, as the name implies. Think of a movie theater line. The first person in line, gets their ticket first.</p>
+<p>There are four functions that we want for our Queue</p>
+<ul>
+<li><code>.enqueue(item)</code>, which puts an item to the back of the line</li>
+<li><code>.dequeue()</code>, remove the first item in the Queue and moves all further items up</li>
+<li><code>.first()</code>, examines the first item in line</li>
+<li><code>.last()</code>, examines the last item in line</li>
+</ul>
+<h3 id="behavior">Behavior</h3>
+<p><em>Why use these structures? They&#39;re already built in to the language that I&#39;m using!</em></p>
+<p>This is a valid question but as noted before, the behavior of each and when to use them, even if they&#39;re incorporated into the language that we currently use.</p>
+<p>Though you may end up with an Array, we would be using its Stacks or Queue behavior.</p>
+<h3 id="questions">Questions</h3>
+<h4 id="-1">#1</h4>
+<p>Use a Linked List (ref: previous chapter), to create a Stack.</p>
+<h4 id="-2">#2</h4>
+<p>Use a Linked List (ref: previous chapter), to create a Queue.</p>
+<h4 id="-3">#3</h4>
+<p>Using 2 Stacks, create a Queue. Below is an example of skeleton code that you would need to leverage.</p>
+<pre><code>function Queue() {
+  this.stack1 = new Stack()
+  this.stack2 = new Stack()
+}
+</code></pre><h4 id="-4">#4</h4>
+<p>Using a Stack and recursion, write code to determine whether or not brackets are valid for code, represented as a String.</p>
+<pre><code>var input = &quot;ary = [1,2,3]; for (var i = 0; i &lt; ary.length; i++) { console.log(ary[i]) }&quot;
+</code></pre><p>Your function should return a Boolean, and accept a a String.</p>
+<h4 id="-5">#5</h4>
+<p>Determine a way to create a Priority Queue, where 1 is the highest priority.</p>
+<p>It operates as a queue, though if we have something with the highest priority in our queue it must be dequeue&#39;d first.</p>
+<p>For instance:</p>
+<ul>
+<li>Enqueue <code>{ priority: 3, value 5 }</code></li>
+<li>Enqueue <code>{ priority: 1, value 2 }</code></li>
+<li>Enqueue <code>{ priority: 2, value 1 }</code></li>
+</ul>
+<p>When we dequeue, <code>{ priority: 1, value 2 }</code> will be the first item to be returned, though the second entered into the Priority Queue.</p>
+<p>An example of this is Amazon, or other vendors. If you pay a bit more, you get a higher priority on your order.</p>
+<h3 id="more-reading">More reading</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">Stacks</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Queue_(abstract_data_type)">Queues</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Priority_queue">Priority Queues</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Stack-based_memory_allocation">Memory Stack</a></li>
+<li><a href="https://stackoverflow.com/questions/2074970/stack-and-queue-why">Why use Stacks and Queues?</a></li>
+</ul>
+
+<!-- Do not remove this tag -->
+<div class="navigation">
+  <a href="./linked_lists.html">Linked Lists</a>
+</div>
+<div class="navigation">
+  <a href="./trees.html">Trees</a>
+</div>
+</div>
+
+</body>
+</html>

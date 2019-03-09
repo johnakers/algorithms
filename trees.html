@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction to Algorithms | Stacks & Queues</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="app">
+<!-- Paste below this line -->
+
+<h2 id="trees">Trees</h2>
+<p><img src="images/trees_1_final.png" alt="Trees"></p>
+<p>Trees, at first glance, are very similar to Linked Lists. They are comprised of Nodes, just like a Linked List but they have two main differences.</p>
+<ol>
+<li>Terminology</li>
+<li>Each Every Node can have multiple references</li>
+</ol>
+<pre><code>Fig. 1
+
+         (A)
+        /   \
+     (B)     (C)
+    /           \
+ (D)             (E)
+</code></pre><p>Instead of a <code>head</code>, we have a <code>root</code>, our Node labelled <em>A</em>. <em>A</em>&#39;s <code>children</code> (not <code>references</code>) are <em>B</em> and <em>C</em>. There <em>B</em> and <em>C</em>&#39;s <code>parent</code> is <em>A</em>. We would say our &quot;leaf Nodes&quot;, Nodes that have no <code>children</code>, are <em>D</em> and <em>E</em>. In addition, <em>D</em> and <em>E</em> have a common <code>ancestor</code> in <em>A</em>.</p>
+<p>In addition, this Tree would have a depth of 2. We can also have a Tree that looks like the below. Unless we specify a type of Tree, by default there are no limit to the number of <code>children</code> per Node but a Tree is always defined by having a <code>root</code>.</p>
+<p>The above figure is a very simple Tree. Each Node (called <code>TreeNode</code> for this instance) would look like the below, in code:</p>
+<pre><code>function TreeNode(value) {
+  this.value = value
+  this.children = []
+}
+</code></pre><pre><code>Fig. 2
+
+             (A)
+            / | \
+         (B) (C) (D)
+</code></pre><h3 id="breadth-first-search">Breadth First Search</h3>
+<p>Breadth First Search (BFS) is an algorithm that goes through our Tree, in each level, and returns and/or examines in the Nodes, by level of the Tree.</p>
+<p>For instance, in <em>Fig. 1</em>, we would return the following order: <em>A</em>, <em>B</em>, <em>C</em>, __D, <em>E</em>.</p>
+<p>When our Tree is very wide, this algorithm can be a bit slow but may be advisable to use when our Tree is a skinny and has many levels.</p>
+<h3 id="depth-first-search">Depth First Search</h3>
+<p>Depth First Search (DFS) is an algorithm that goes through our Tree, getting all the way to the bottom, then coming back up, going through each first child, recursively, labelling it discovered and moving on to the next.</p>
+<p>In <em>Fig. 2</em>, we would return the following order: <em>A</em>, <em>B</em>, <em>D</em>, <em>C</em>, <em>E</em>.</p>
+<p>Notice the difference from BFS, where we get to the bottom of the Tree quickly. This is optimal for a shallow Tree, that may be a bit on the wider side.</p>
+<h3 id="binary-trees">Binary Trees</h3>
+<p>Binary Trees put some conditions are our Nodes.</p>
+<ol>
+<li>Each Node may only have 2 children</li>
+<li>The <code>left_child</code> must have a lesser value than the <code>parent</code></li>
+<li>The <code>right_child</code> must have an equal or greater value than the <code>parent</code></li>
+</ol>
+<p>An example of our Binary Tree Node (<code>BTNode</code>) would look like, in code:</p>
+<pre><code>function BTNode(value) {
+  this.value = value
+  this.left_child = null
+  this.right_child = null
+}
+</code></pre><p>And we will use a <code>BinaryTree</code> wrapper Object around our Nodes, much like our Linked List chapter.</p>
+<pre><code>function BinaryTree() {
+  this.root = null
+
+  this.add = function(value) {
+    if (this.root == null) {
+      this.root = new BTNode(value)
+    } else {
+      recursiveAdd(this.root, value)
+    }
+  }
+
+  function recursiveAdd(node, value) {
+    if (value &gt;= node.value) {
+      if (node.right_child == null) {
+        node.right_child = new BTNode(value)
+      } else {
+        recursiveAdd(node.right_child, value)
+      }
+    } else {
+      if (node.left_child == null) {
+        node.left_child = new BTNode(value)
+      } else {
+        recursiveAdd(node.left_child, value)
+      }
+    }
+  }
+}
+</code></pre><p>Like our LinkedList, we can utilize recursion for additions to our Binary Tree.</p>
+<p><img src="images/trees_2_final.png" alt="trees2"></p>
+<h3 id="questions">Questions</h3>
+<h4 id="-1">#1</h4>
+<p>Morse Code is an alphabet broken up into dashes and dots. <a href="https://en.wikipedia.org/wiki/Morse_code#/media/File:Morse_code_tree3.png">It is actually broken into a Binary Tree structure</a>.</p>
+<p>Using the image provided, implement a Morse reader, that accepts a String as an argument</p>
+<h3 id="-2">#2</h3>
+<p>Implement a <code>delete(value)</code> method on our <code>BinaryTree</code>.</p>
+<p><a href="#">Answer</a></p>
+<h3 id="-3">#3</h3>
+<p>Based on the <a href="https://en.wikipedia.org/wiki/Breadth-first_search#Pseudocode">Wikipedia Pseudocode</a>, implement BFS on a Tree.</p>
+<h3 id="-4">#4</h3>
+<p>Based on the <a href="https://en.wikipedia.org/wiki/Depth-first_search">Wikipedia Pseudocode</a>, implement DFS on a Tree.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Trees are an important data structure. The DOM in this webpage is a Tree. MongoDB, a popular No-SQL database, uses Trees. Object hierarchy and understanding inheritance as it pertains to programming can be displayed with a Tree.</p>
+<p>Understanding them is important and leads into further data structures, such as the below mentioned Graphs.</p>
+<h3 id="a-quick-note-on-graphs">A quick note on Graphs</h3>
+<p>Graphs, to keep it short, are a &quot;root-less&quot; Tree. There is no one single starting point. They have Vertices (instead of Nodes) and Edges (instead of Children). They can be directional:</p>
+<pre><code>// B is an Edge to A but A is not an Edge to B
+
+(A) -&gt; (B)
+</code></pre><p>Bi-directional:</p>
+<pre><code>// A and B are Edges to each other
+
+(A) &lt;-&gt; (B)
+</code></pre><p>or even contain a cycle:</p>
+<pre><code>// A to B to C to A ... etc.
+
+(A) -&gt; (B)
+  ^    /
+   \  v
+    (C)
+</code></pre><p>LinkedIn, your friends on Twitter or Facebook and other popular apps all utilize a Graph in order to give you &quot;2nd degree relationships&quot; and so forth.</p>
+<p>In addition, we can use our DFS/BFS algorithms to search for a Vertex. For the purpose overall of this text, I won&#39;t go into them too much but if you have the time and are interested, I highly reccomend checking it out.</p>
+<p>We can also weight the Edges in a Graph. This allows us to represent travel time, scheduling and other applications.</p>
+<h2 id="more-reading">More Reading</h2>
+<ul>
+<li><a href="http://www.cs.man.ac.uk/~pjj/cs212/fix.html">Infix, Postfix and Prefi Notation</a></li>
+<li><a href="https://en.wikipedia.org/wiki/List_of_data_structures#Trees">Other Types of Trees</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&#39;s Algorithm</a></li>
+</ul>
+
+
+<!-- Do not remove this tag -->
+<div class="navigation">
+  <a href="./stacks_queues.html">Stacks & Queues</a>
+</div>
+</div>
+
+</body>
+</html>

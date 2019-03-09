@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction to Algorithms | Recursion</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="app">
+<!-- Paste below this line -->
+
+<h2 id="recursion">Recursion</h2>
+<p><img src="images/recursion_final.png" alt="Recursion"></p>
+<p>Recursion is an important part of this text for one major reason. Other data structures utilize recursion to solive their problems.</p>
+<h3 id="the-parts-of-a-recursive-function">The parts of a recursive function</h3>
+<ul>
+<li>The base case.</li>
+</ul>
+<p>Perhaps you&#39;ve run into an example of &quot;stack level too deep&quot; before. The base case is the section that tells our program to stop.</p>
+<ul>
+<li>The recursive case</li>
+</ul>
+<p>The counter to our base case. If the base case is not met, we run this side of the function.</p>
+<p>Let&#39;s look at a simple counter program. It will count down from a number to 0.</p>
+<pre><code>function countdown(n) {
+  if (n &lt; 0) {
+    return undefined
+  } else {
+    console.log(n)
+    return countdown(n-1)
+  }
+}
+</code></pre><p>Versus the same iterative solution</p>
+<pre><code>function countdown(n) {
+  for (var i = n; i &gt;= 0; i--) {
+    console.log(i)
+  }
+}
+</code></pre><p>Our base case is <code>if (n &lt; 0)</code>. This is telling our program to stop when our condition is met. If it is absent, we will infinitely loop, counting down forever.</p>
+<p>The recursive case did something, then returned a smaller version of the exact same program.</p>
+<blockquote>
+<p><em>The goal of a recursive function is to continually call itself with a smaller and smaller problem until we meet our base case.</em></p>
+</blockquote>
+<h3 id="the-call-stack">The call stack</h3>
+<p>In the recursive case, you&#39;ll notice we&#39;re not returning a value but instead, an entirely newly invoked function. By this, we can assume that recursive functions <em>do</em> take up more memory than an iterative one. In addition, we can also trace the call stack, the order of functions called as until we get to a base case, none of these called functions returns.</p>
+<p>Let&#39;s use a classic Fibonacci recursive function as an example. The fibonacci sequence is:</p>
+<pre><code>n     | 1  2  3  4  5 
+-----------------------
+value | 1  1  2  3  5
+</code></pre><p>And the code:</p>
+<pre><code>// abbreviated &quot;fibonacci&quot; to &quot;fib&quot;
+function fib(n) {
+  if (n &lt; 2) {
+    return n
+  } else {
+    return fib(n-1) + fib(n-2)
+  }
+}
+</code></pre><p>Lets trace <code>fib(5)</code>. We know it should return 5.</p>
+<pre><code>            fib(5)
+            /    \
+       fib(4)     fib(3)
+      /    \       |    \ 
+  fib(3)  fib(2) fib(2) fib(1)
+   /   \   [1]    [1]     [1]
+fib(2) fib(1)
+[1]      [1]
+</code></pre><p>We can see the Tree structure that is created and see the <code>1</code>&#39;s returned, 5 of them.</p>
+<p>Technically, we haven&#39;t returned a value until each branch gets all the way to its base case. The values of each function then &quot;bubble up&quot; back to the orginal call of <code>fib(5)</code>.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Recursion was needed a lot more in languages and frameworks that did not have proper loops as we know them today. It is still used in a variety of fields such as <a href="https://books.google.com/books?id=3ljRBQAAQBAJ&amp;pg=PA122&amp;lpg=PA122&amp;dq=game+development+recursion+graphics&amp;source=bl&amp;ots=5LX2SaW1c1&amp;sig=RvrzzWkju9udKcRqf73vpg0FfCI&amp;hl=en&amp;sa=X&amp;ved=0ahUKEwjmqtDl96vYAhWHgVQKHYqyD_cQ6AEIMzAB#v=snippet&amp;q=recursion&amp;f=false">graphics in game development</a>. In addition, throughout the coming chapters of this text we&#39;ll use recursion on data structures that leverage it well.</p>
+<h3 id="questions">Questions</h3>
+<h4 id="-1">#1</h4>
+<p><a href="https://en.wikipedia.org/wiki/Quicksort">Quicksort</a> is a divide and conquer algorithm.</p>
+<ul>
+<li>Implement it in JavaScript, or a language of your choice.</li>
+<li>Ensure you understand how it operates recursively.</li>
+</ul>
+<h4 id="-2">#2</h4>
+<p>Try calling our <code>fib</code> function with an argument of <code>100</code>. You&#39;ll see that it&#39;ll take a very long time.</p>
+<ul>
+<li>Using <a href="https://en.wikipedia.org/wiki/Memoization">memoization</a>, try and write a function that will return <code>fib(100)</code> in linear time (<em>O(n)</em>).</li>
+</ul>
+<blockquote>
+<p><em>Hint: it will not be a recursive function.</em></p>
+</blockquote>
+<h4 id="-3">#3</h4>
+<p>Write a function called <code>multiply</code> that accepts 2 numbers as arguments. Write this as a recursive function without using the <code>*</code> (multiply) operator.</p>
+<pre><code>function multiply(n, m) {
+  // code
+}
+
+multiply(8, 7) == 56 // true
+</code></pre><p><a href="https://repl.it/repls/PeacefulKlutzyGeese">Answer</a></p>
+<h4 id="-4">#4</h4>
+<p>We want to recursively print stars in a pyramid fashion (rotated 90 degrees to the right), using an asterisk &quot;*&quot;. We want to write a function called <code>starUp</code> that accepts 2 arguments. The integer we start at and the integer we end at.</p>
+<p>Example:</p>
+<pre><code>starUp(0, 3)
+
+// returns
+*
+**
+***
+**
+*
+</code></pre><p>The <em>only</em> iterative part of your program is the below given helper function though bonus points if you implement a recursive solution of it:</p>
+<pre><code>function printStars(n) {
+  var stars = &#39;&#39;
+  for (var i = 0; i &lt; n; i++) {
+    stars += &#39;*&#39;
+  }
+
+  console.log(stars)
+}
+</code></pre><h3 id="more-sites">More sites</h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Master_theorem_(analysis_of_algorithms">Master Theorem</a></li>
+<li><a href="https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/recursionre">Khan Academy on Recursion</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Recursion_(computer_science">Wikipedia</a></li>
+<li>Try Google&#39;ing &quot;recursion&quot;</li>
+</ul>
+
+
+
+<!-- Do not remove this tag -->
+<div class="navigation">
+  <a href="./big_o.html">Big O</a>
+</div>
+<div class="navigation">
+  <a href="./linked_lists.html">Linked Lists</a>
+</div>
+</div>
+
+</body>
+</html>

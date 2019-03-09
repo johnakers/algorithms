@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Introduction to Algorithms | Linked Lists</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div id="app">
+<!-- Paste below this line -->
+
+<h2 id="linked-lists">Linked Lists</h2>
+<p><img src="images/linkedlists_final.png" alt="Linked Lists"></p>
+<p>Linked Lists are a reference based data structure. This is opposed to an indexed or key based data structure such as a JavaScript Array or Object. An exmaple of this is a Linked List is a train.</p>
+<p>We have our engine, and an arbitrary number of following cars. The <em>n<sup>th</sup></em> car is reliant on the <em>n<sup>th</sup> - 1</em> to stay connected. It does not &quot;know&quot; about the other cars in the train, just the one before it.</p>
+<h3 id="history">History</h3>
+<p>In a language like C, Arrays are instantiated as follows:</p>
+<pre><code>int integerArray[10]
+</code></pre><p>This defines an Array, that only is allowed to possess Integers, and can have no more than 10 items in it. We were not allowed to just <code>.push</code> an arbitrary amount of items, of multiple types, into an Array like in JavaScript.</p>
+<p>When we want to add items to this C Array, we would need to create a new one of double the length (by convention), copy over all the current items, and add the new ones, then delete the old Array.</p>
+<p>This can get either tedious, or expensive, particularly based on the data.</p>
+<p>Linked Lists are a way to keep adding items to an Array, without having to go through the whole protocol of Array doublling and copying.</p>
+<h3 id="structure">Structure</h3>
+<pre><code>// Array
+  0  1  2  3
+[ 4, 5, 2, 7 ]
+
+// Linked List
+(4) -&gt; (5) -&gt; (2) -&gt; (7)
+</code></pre><p>Linked Lists are comprised of Nodes. A Node has a value (in the example above, an Integer), and a reference, which is always another Node. Some skeleton code for a Node is below.</p>
+<pre><code>function Node(val, ref) {
+  this.value = val
+  this.reference = ref
+}
+
+var n = new Node(1)
+var m = new Node(2, n)
+</code></pre><p>We could call methods like <code>n.reference</code> or <code>n.value</code> but we always need to remember that <code>n</code> is our first Node. Which can get tough in a program to remember. We need something to wrap all these Nodes and be able to call functions. This is where a Linked List object comes in.</p>
+<p>Below is the <code>LinkedList</code> object, in conjunction with a recursive add function. By default, in our Linked List, we add to the end of the list. We call the first Node in the LinkedList the <code>head</code>. This is always our starting point for operating on a LinkedList due to our reference based structure.</p>
+<pre><code>function Node(val) {
+  this.value = val
+  this.reference = null
+}
+
+function LinkedList() {
+  this.head = null
+
+  this.add = function(val) {
+    if (this.head == null) {
+      this.head = new Node(val)
+    } else {
+      recursiveAdd(val, this.head)
+    }
+  }
+
+  // a closure to keep the concept of a &quot;private&quot; function
+  function recursiveAdd(val, node) {
+    if (node.reference == null) {
+      node.reference = new Node(val)
+    } else {
+      recursiveAdd(val, node.reference)
+    }
+  }
+}
+</code></pre><p><a href="https://repl.it/repls/JointPeachpuffAgama">repl.it</a></p>
+<p>Instantiation and calling methods on our Linked List would look like:</p>
+<pre><code>ll = new LinkedList()
+ll.add(1) // HEAD -&gt; (1)
+ll.add(2) // HEAD -&gt; (1) -&gt; (2)
+// etc.
+</code></pre><h3 id="advantages">Advantages</h3>
+<p>Using the Array <code>[1,2,3]</code> as an example. What if we wanted to add <code>4</code> in between the <code>2</code> and <code>3</code>?</p>
+<p>If we&#39;re in C, and have no more room, we need to do our double/copy/delete original funciton. If we&#39;re in JavaScript, or C when we have room, we need to then shift every element over in the Array, the place the item at the correct index. This is an <em>O(n)</em> function.</p>
+<p>For a LinkedList, placing at the a new Node/value anywhere but the end of will be less than <em>n</em> operations. We can simply re-arrange the references. There is not shifting of Nodes.</p>
+<pre><code>// Pseudocode for addBefore(beforeVal, val)
+
+Traverse Nodes
+  If the current Node&#39;s reference&#39;s value is equal to what we&#39;re looking for
+    The Node to be inserted&#39;s reference becomes the current Node&#39;s reference
+    The current Node&#39;s reference becomes the Node to be inserted
+</code></pre><h3 id="disadvantages">Disadvantages</h3>
+<p>When we want to add on to our list, we need to iterate over the size of the list in order to get to the end, then append. It is an <em>O(n)</em> function.</p>
+<p>In addition, retrieving a specific element is also an <em>O(n)</em> operation.</p>
+<p>Because Arrays operate in an indexed fashion, and if it does not need to grow (sucy as a JavaScript or other scripting langauge Array), it is an O(1) operation.</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>Linked Lists are an important structure for allowing operations to be done and our list to be maintained in a better fashion than an Array, based on their use case.</p>
+<p>Today, Ruby&#39;s Array, Python&#39;s List, Java&#39;s ArrayList and so forth are dynamic. They grow and resize for us and we don&#39;t need to need work about our C Array protocols. In addition, they have a lot of useful methods already built in. While they, Linked Lists, may go unused, other structures utilize them and are built off of Linked Lists (such as Trees). It is useful to understand the concept of a Linked List in order to grasp further concepts in this text.</p>
+<h3 id="questions">Questions</h3>
+<h4 id="-1">#1</h4>
+<p>Implement the above <code>addBefore</code> function. It should accept two arguments, the value to find and the value to add before the &quot;found&quot; value.</p>
+<h4 id="-2">#2</h4>
+<p>Implement <code>remove</code>. This function accepts one argument of a value to be removed from the LinkedList.</p>
+<blockquote>
+<p><em>Hint: Be careful with references</em></p>
+</blockquote>
+<h4 id="-3">#3</h4>
+<p>Implement <code>clear</code>. This clears the Linked List, meaning it is empty.</p>
+<p><a href="https://repl.it/repls/RegularMundaneSpiketail">Answers to 1 through 3</a></p>
+<h4 id="-4">#4</h4>
+<p>Implement a &quot;tail pointer&quot; in a Linked List. In addition, add <code>.previous</code> to your Node object. This is called a &quot;doubly linked list&quot;.</p>
+<blockquote>
+</blockquote>
+<p><a href="https://repl.it/repls/TransparentFavoriteWolverine">Answer</a></p>
+<h3 id="more-sites">More Sites</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=njTh_OwMljA">HackerRank on Linked Lists</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Linked_list">Wikipedia</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Dynamic_array">Dynamic Arrays</a></li>
+</ul>
+
+
+<!-- Do not remove this tag -->
+<div class="navigation">
+  <a href="./recursion.html">Recursion</a>
+</div>
+<div class="navigation">
+  <a href="./stacks_queues.html">Stacks & Queues</a>
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Introduction to Algorithms | Big O</title>
+  <link rel='stylesheet' type='text/css' href='style.css'>
+</head>
+<body>
+
+<div id='app'>
+<!-- Paste below this line -->
+
+<h2 id='big-o'>Big O</h2>
+<p><img src='images/bigO_1_final.png' alt='Big O'></p>
+<p>
+  "Big O", or "Big O Notation", is a term used to describe a wider field of study. It is notation,
+  and related math, that allows us to denote how big and how slow our programs are. Whether it be a
+  video game, launching a rocket, a phone app or this web page, we want our apps to run fast, and use
+  as little memory as possible. Therefore, Big O is a notation that states the worst case scenario,
+  or a "high water mark".
+</p>
+
+<p>There are other notations (omega and theta), and they&#39;re interesting and I highly encourage you to read about them but for our purposes, and the practical purposes of writing code, we will solely focus on <em>O</em> (Big O).</p>
+<p>Below are some examples of Big O Notation (<a href='https://en.wikipedia.org/wiki/Big_O_notation#Family_of_Bachmann%E2%80%93Landau_notations'>also called the Bachmann-Landau notation</a>).</p>
+<h3 id='notation'>Notation</h3>
+<h4 id='o-1-'>O(1)</h4>
+<p>O(1), pronounced "Oh of one", means our program executes immediately, or in constant time, the same time in which our program was run. Regardless of the size of our data. Examples of this are conditionals and assigments.</p>
+<pre><code>var x = 5
+if (x == 5) {
+  console.log(&#39;x is five!&#39;)
+}
+</code></pre><p>Our program does not have to loop. We assigned <code>x</code>, and we put it through a conditional.</p>
+<h4 id='o-n-'>O(n)</h4>
+<p><em>n</em> is the number of items in our input. If we don&#39;t know exactly the number of items in our input to our program, as in algebra, we use <em>n</em> by convention to denote it.</p>
+<p>Our program will grow to the size of our input. This is called linear growth, where the number of operations our program has is in direct correlation to the input. In the below program, we would have to hypothetically go through every item in the collection to determine whether or not it is 5, in the worst case scenario. Hence, <em>O(n)</em>.</p>
+<pre><code>array = [ ? ] // an Array of unknown length
+
+for (var i = 0; i &lt; array.length; i++) {
+  if (array[i] == 5) {
+    return i
+  }
+}
+</code></pre><h4 id='o-n-sup-2-sup-'>O(n<sup>2</sup>)</h4>
+<p>While <em>O(n)</em> grows to the same size as our input, <em>O(n<sup>2</sup>)</em> grows to the square of our input. Meaning, if our input is a list of 4 items, we may have up to 16 operations. This usually comes about from the nesting of loops. The below code shows an example of this:</p>
+<pre><code>array = [ ? ] // an Array of unknown length
+
+for (var i = 0; i &lt; array.length; i++) {
+  for (var j = 0; j &lt; array.length; j++) {
+    console.log(&#39;i is: &#39; + i)
+    console.log(&#39;j is: &#39; + j)
+  }
+}
+</code></pre><p>Another, perhaps more common example, that can occur during something like an API request or getting two distinct pices of data and then having to merge or alter them in some way.</p>
+<pre><code>array1 = [ ? ] // an Array of unknown length
+array2 = [ ? ] // a separate Array of unknown length
+
+for (var i = 0; i &lt; array1.length; i++) {
+  for (var j = 0; j &lt; array1.length; j++) {
+    console.log(array1[i] + array2[j])
+  }
+}
+</code></pre><p>If we have a triple nested loop, using this above example, as you may have guessed we could say <em>O(n<sup>3</sup>)</em>.</p>
+<p>While we can say that this should be <em>O(n * m)</em> as they are distinct Arrays. Which does seem more algebraic at first glance, by convention we say this is still <em>O(n<sup>2</sup>)</em>.</p>
+<p>The reason for this is, <em>n</em> is entirely unknown. <em>m</em> is also entirely unknown. They could be the same length, different, or having nothing them. Therefore <em>m</em> is theorettically the same as <em>n</em> in regards to a conceptual point of view on how our program speed will grow. Arguably, it makes it perhaps slightly easier to represent what is going on. For instance, what if we have 3 lists noted above? <em>O(n <em> m </em> o)</em> doesn&#39;t roll off the tongue as well as "Oh of n cubed".</p>
+<h4 id='o-log-n-'>O(log n)</h4>
+<p><em>O(log n)</em> denotes that our program will grow with the log<sub>2</sub> of <em>n</em>. There are quite a few divide-and-conquer algorithms that filter our inputs log<sub>2</sub> times.</p>
+<p>Logarithms can be thought of as "reverse exponents". For instance, 2^<sup>3</sup> is 8. Therefloore log<sub>2</sub>8 is 3. </p>
+<p>A great example of this is the <a href='https://en.wikipedia.org/wiki/Binary_search_algorithm#Procedure'>binary-search algorithm</a>.</p>
+<h4 id='more-notation'>More notation</h4>
+<p>There are <em>O(n!)</em> and <em>O(2<sup>n</sup>)</em> notations as well. They are interesting but less common.</p>
+<h3 id='analyzing-a-program'>Analyzing a program</h3>
+<p>When evaluating an entire program, we remove the constants.</p>
+<pre><code>a = [ ? ] // an Array of unknown length
+
+for (var i = 0; i &lt; array.length; i++) {
+  console.log(i)
+}
+
+for (var i = 0; i &lt; array.length; i++) {
+  console.log(array[i])
+}
+</code></pre><p>We could say the above program would be <em>O(2n)</em>. We have 2 loops, not nested, that iterate over our entire list. For Big O, we care about the trend or rather "how" our program grows. <em>n</em>, versus <em>2n</em>, versus <em>100n</em>, they all grow in linear time.</p>
+<p>We drop the constant, the 2, and say our program&#39;s Big O is <em>O(n)</em>.</p>
+<p>Consider the below program:</p>
+<pre><code>array = [ ? ] // an Array of unknown length
+
+for (var i = 0; i &lt; array.length; i++) {
+  if (array[i] == 5) {
+    console.log(&#39;Found 5&#39;)
+  }
+}
+
+for (var i = 0; i &lt; array.length; i++) {
+  for (var j = 0; j &lt; array.length; j++) {
+    if (j == i) {
+      console.log(&#39;Found an interesting match!&#39;)
+    }
+  }
+}
+
+for (var i = 0; i &lt; array.length; i++) {
+  for (var j = 0; j &lt; array.length; j++) {
+    if (j == i) {
+      console.log(&#39;Found an interesting match again!&#39;)
+    }
+  }
+}
+</code></pre><p>There&#39;s a lot going on in this program.</p>
+<ul>
+<li>The fist <code>array</code> assignment runs in <em>O(1)</em></li>
+<li>The next loop runs in <em>O(n)</em></li>
+<li>The next nested loop runs in _O(n<sup>2</sup>)</li>
+<li>The next nested loop runs in _O(n<sup>2</sup>) again</li>
+</ul>
+<p>Mathematically, our program could look like:</p>
+<pre><code>O(1) + O(n) + O(n^2) + O(n^2)
+</code></pre><p>We can then combine like terms:</p>
+<pre><code>O(1) + O(n) + 2O(n^2)
+</code></pre><p>Drop our constants (remember, <em>O(1)</em> is considered "constant time"):</p>
+<pre><code>O(n) + O(n^2)
+</code></pre><p>And finally, for this example, we use the largest Big O found to represent our whole program.</p>
+<pre><code>O(n^2)
+</code></pre><p>We do this because, what if our program had nothing but super fast <em>O(1)</em> code but then we have our <em>O(n<sup>2</sup>)</em> loop? Our program <em>has</em> to run it and therefore, it becomes our "choke point". The slowest element that dictates the growth trend.</p>
+<p><img src='images/bigO_2_final.png' alt='Big O'></p>
+<h3 id='conclusion'>Conclusion</h3>
+<p>Big O Notation is important for any field of software development. With that said, it is also a very deep and involved field that requires a lot of time to understand. Below, I&#39;ve posted some links that I suggest reading or at least glancing at. The important "tweet sized" takeaway from this section is:</p>
+<blockquote>
+<p><em>Nested loops are something to stray away from whenever possible. We determine the Big O of our program by the slowest block found, regardless of how fast everything else is. Big O is an indication of growth, not an exact amount.</em></p>
+</blockquote>
+<h3 id='questions'>Questions</h3>
+<h4 id='-1'>#1</h4>
+<p>We have a jar of 100 marbles. 50 red. 50 blue. They are mixed up randomly in the jar, and we cannot see into the jar. We pull a marble at random.</p>
+<ul>
+<li>How many pulls would it require to "prove" there are in fact 2 colors in the jar? (hint: What is the worst case scenario?)</li>
+<li>What is the Big O of our marble pulling?</li>
+</ul>
+<p><a href='https://en.wikipedia.org/wiki/51'>Answer</a></p>
+<h4 id='-2'>#2</h4>
+<p>We created a sorting algorithm for a list that works as follows:</p>
+<pre><code>Start at the beginning of the list
+Traverse the list
+  Compare the current item, and the next, if there is one
+  If the current item is greater than the next, swap them
+
+Do this "n" number of times
+</code></pre><p>An example is, the list <code>[ 5, 3, 7, 2, 1 ]</code> would look like <code>[ 5, 3, 2, 1, 7 ]</code> after the first traversal.</p>
+<ul>
+<li>Write code for the full function. Your code should take an Array/List as an argument and return a sorted Array/List.</li>
+<li>What is the Big O of this function?</li>
+</ul>
+<p><a href='https://en.wikipedia.org/wiki/Bubble_sort'>Answer</a></p>
+<h4 id='-3'>#3</h4>
+<p>Write code to reverse a String in O(n) time? (Meaning we go through the String only once). Your code should accept a String, such as "John", and return a String "nhoJ".</p>
+<p>For a more advanced challenge, do not create a new String. Return the same String.</p>
+<p><a href='https://repl.it/repls/JovialPushyAquaticleech'>Answer</a></p>
+<h4 id='-4'>#4</h4>
+<p><a href='https://en.wikipedia.org/wiki/Merge_sort'>Merge sort</a> runs in <em>O(n * log n)</em>. Implement this sort in JavaScript, or another language of your choice. In addition, understand why, for this algorithm, we multiplied the run times instead of adding them together to determine the overall Big O.</p>
+<h3 id='more-sites'>More sites</h3>
+<ul>
+<li><a href='https://www.youtube.com/watch?v=kPRA0W1kECg'>Sorting Visualizations</a></li>
+<li><a href='http://bigocheatsheet.com/'>Big O Cheat Sheet</a></li>
+<li><a href='https://rob-bell.net/2009/06/a-beginners-guide-to-big-o-notation/'>Big O Notation by Rob Bell</a></li>
+<li><a href='https://www.youtube.com/watch?v=AAW7WRFBKdw'>Logarithms</a></li>
+<li><a href='http://www.purplemath.com/modules/factorial.htm'>Factorials</a></li>
+<li><a href='https://www.youtube.com/watch?v=DJlOxOmmp9Y'>Permuations &amp; Combinations</a></li>
+<li><a href='https://www.youtube.com/watch?v=3Ry7gl-LSGA'>Combinatorics</a></li>
+<li><a href='https://en.wikipedia.org/wiki/Amortized_analysis'>Amortized analysis</a></li>
+<li><a href='https://www.youtube.com/watch?v=ywWBy6J5gz8'>Sorting Visualizations via dance</a></li>
+</ul>
+<p>And finally, see you if you can determine the Big O of the <a href='https://www.youtube.com/watch?v=Qcv1IqHWAzg'>Stable Marriage Problem</a>, before you Google the answer.</p>
+
+
+<!-- Do not remove this tag -->
+<div class='navigation'>
+  <a href='./index.html'>Contents</a>
+</div>
+<div class='navigation'>
+  <a href='./recursion.html'>Recursion</a>
+</div>
+
+</div>
+
+</body>
+</html>
